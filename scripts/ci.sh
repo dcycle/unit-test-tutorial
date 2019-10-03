@@ -4,4 +4,5 @@
 #
 set -e
 
-docker run --rm phpunit/phpunit --version
+docker run --rm -v "$(pwd)":/app phpunit/phpunit \
+  --group myproject
