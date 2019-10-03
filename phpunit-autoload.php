@@ -10,6 +10,8 @@
  * Used by the PHPUnit test runner and referenced in ./phpunit.xml.
  */
 
+require_once 'phpunit-bootstrap.php';
+
 spl_autoload_register(function ($class) {
   if (substr($class, 0, strlen('Drupal\\auto_entitylabel\\')) == 'Drupal\\auto_entitylabel\\') {
     $class2 = str_replace('Drupal\\auto_entitylabel\\', '', $class);
