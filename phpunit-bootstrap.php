@@ -17,3 +17,7 @@ namespace Drupal\Core\DependencyInjection {
 namespace Drupal\Core\Validation\Plugin\Validation\Constraint {
   class NotNullConstraintValidator {}
 }
+
+namespace Drupal\Core\Field {
+  class FieldItemList {}
+}

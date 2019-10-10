@@ -3,6 +3,7 @@
 namespace Drupal\auto_entitylabel\Tests;
 
 use Drupal\auto_entitylabel\Plugin\Validation\EntityLabelNotNullConstraintValidator;
+use Drupal\Core\Field\FieldItemList;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -66,6 +67,24 @@ class EntityLabelNotNullConstraintValidatorTest extends TestCase {
       [
         'message' => 'Typed data is not a FieldItemList',
         'input' => new \stdClass(),
+        'expected' => FALSE,
+      ],
+      [
+        'message' => 'Typed data is an empty FieldItemList',
+        'input' => new class() extends FieldItemList {
+          public function isEmpty() {
+            return TRUE;
+          }
+        },
+        'expected' => TRUE,
+      ],
+      [
+        'message' => 'Typed data is an non-empty FieldItemList',
+        'input' => new class() extends FieldItemList {
+          public function isEmpty() {
+            return FALSE;
+          }
+        },
         'expected' => FALSE,
       ],
     ];
