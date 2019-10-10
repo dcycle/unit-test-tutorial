@@ -49,9 +49,7 @@ class AutoEntityLabelSingleton {
           // hook_entity_presave().
           $widget['value']['#type'] = 'hidden';
           $widget['value']['#required'] = FALSE;
-          if (empty($widget['value']['#default_value'])) {
-            $widget['value']['#default_value'] = '%AutoEntityLabel%';
-          }
+          $widget['value']['#default_value'] = $this->widgetDefaultValue($widget);
           break;
 
         case AutoEntityLabelManager::OPTIONAL:
@@ -69,6 +67,20 @@ class AutoEntityLabelSingleton {
 
       $form['#auto_entitylabel_processed'] = TRUE;
     }
+  }
+
+  /**
+   * Given a widget array, return its default value, or '%AutoEntityLabel%'.
+   *
+   * @param array $widget
+   *   A widget array which must contain a 'value' key.
+   *
+   * @return string
+   *   $widget['value']['#default_value'] if possible, otherwise
+   *   '%AutoEntityLabel%'.
+   */
+  public function widgetDefaultValue(array $widget) {
+    return empty($widget['value']['#default_value']) ? '%AutoEntityLabel%' : $widget['value']['#default_value'];
   }
 
 }
