@@ -9,3 +9,11 @@
 namespace Drupal\Core\StringTranslation {
   trait StringTranslationTrait {}
 }
+
+namespace Drupal\Core\DependencyInjection {
+  interface ContainerInjectionInterface {}
+}
+
+namespace Drupal\Core\Validation\Plugin\Validation\Constraint {
+  class NotNullConstraintValidator {}
+}

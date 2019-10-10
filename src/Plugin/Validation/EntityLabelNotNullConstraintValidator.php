@@ -63,6 +63,7 @@ class EntityLabelNotNullConstraintValidator extends NotNullConstraintValidator i
     if ($typed_data instanceof FieldItemList && $typed_data->isEmpty()) {
       return $this->manageValidTypedData($typed_data);
     }
+    return FALSE;
   }
 
   /**
@@ -79,6 +80,7 @@ class EntityLabelNotNullConstraintValidator extends NotNullConstraintValidator i
     if ($decorated_entity->hasLabel() && $decorated_entity->autoLabelNeeded()) {
       return TRUE;
     }
+    return FALSE;
   }
 
 }
