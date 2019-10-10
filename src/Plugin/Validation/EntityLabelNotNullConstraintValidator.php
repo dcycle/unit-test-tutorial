@@ -47,17 +47,38 @@ class EntityLabelNotNullConstraintValidator extends NotNullConstraintValidator i
    * {@inheritdoc}
    */
   public function validate($value, Constraint $constraint) {
+    if (!$this->manageTypedData()) {
+      parent::validate($value, $constraint);
+    }
+  }
+
+  /**
+   * Manage typed data if it is valid.
+   *
+   * @return bool
+   *   FALSE if the parent class validation should be called.
+   */
+  public function manageTypedData() : bool {
     $typed_data = $this->getTypedData();
     if ($typed_data instanceof FieldItemList && $typed_data->isEmpty()) {
-      $entity = $typed_data->getEntity();
-      /** @var \Drupal\auto_entitylabel\AutoEntityLabelManager $decorated_entity */
-      $decorated_entity = $this->entityDecorator->decorate($entity);
-
-      if ($decorated_entity->hasLabel() && $decorated_entity->autoLabelNeeded()) {
-        return;
-      }
+      return $this->manageValidTypedData($typed_data);
     }
-    parent::validate($value, $constraint);
+  }
+
+  /**
+   * Manage typed data which is known to be valid.
+   *
+   * @return bool
+   *   FALSE if the parent class validation should be called.
+   */
+  public function manageValidTypedData() : bool {
+    $entity = $typed_data->getEntity($typed_data);
+    /** @var \Drupal\auto_entitylabel\AutoEntityLabelManager $decorated_entity */
+    $decorated_entity = $this->entityDecorator->decorate($entity);
+
+    if ($decorated_entity->hasLabel() && $decorated_entity->autoLabelNeeded()) {
+      return TRUE;
+    }
   }
 
 }
