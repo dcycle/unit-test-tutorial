@@ -65,6 +65,28 @@ class AutoEntityLabelManagerTest extends TestCase {
   }
 
   /**
+   * Get a public version of a protected method.
+   *
+   * See https://stackoverflow.com/a/2798203/1207752.
+   */
+  protected static function getMethodAsPublic($name) {
+    $class = new \ReflectionClass(AutoEntityLabelManager::class);
+    $method = $class->getMethod($name);
+    $method->setAccessible(true);
+    return $method;
+  }
+
+  /**
+   * Get a public version of a protected method.
+   */
+  protected static function getPropertyAsPublic($name) {
+    $class = new \ReflectionClass(AutoEntityLabelManager::class);
+    $property = $class->getProperty($name);
+    $property->setAccessible(true);
+    return $property;
+  }
+
+  /**
    * Test for getConfig().
    *
    * @cover ::getConfig
@@ -76,14 +98,17 @@ class AutoEntityLabelManagerTest extends TestCase {
       ->disableOriginalConstructor()
       ->getMock();
 
-    $object->config = new class {
+    $public_config_property = self::getPropertyAsPublic('config');
+    $public_config_property->setValue($object, new class {
       public function get(string $x) {
         return 'hello';
       }
-    };
+    });
+
+    $public_getconfig_method = self::getMethodAsPublic('getConfig');
 
     $expected = 'hello';
-    $output = $object->getConfig('whatever');
+    $output = $public_getconfig_method->invokeArgs($object, ['whatever']);
 
     if ($output != $expected) {
       print_r([
