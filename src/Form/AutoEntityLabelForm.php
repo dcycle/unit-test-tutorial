@@ -232,17 +232,24 @@ class AutoEntityLabelForm extends ConfigFormBase {
       $form['auto_entitylabel']['pattern']['#description'] .= ' ' . $this->t('To get a list of available tokens install <a href=":drupal-token" target="blank">Token</a> module.', [':drupal-token' => 'https://www.drupal.org/project/token']);
     }
 
-    $form['auto_entitylabel']['escape'] = [
+    $form['auto_entitylabel']['escape'] = $this->escapeCheckbox($config, $invisible_state);
+
+    $form['#attached']['library'][] = 'auto_entitylabel/auto_entitylabel.admin';
+
+    return parent::buildForm($form, $form_state);
+  }
+
+  /**
+   * Just demonstrating how $this->t() can be mocked during a unit test...
+   */
+  public function escapeCheckbox($config, $invisible_state) : array {
+    return [
       '#type' => 'checkbox',
       '#title' => $this->t('Remove special characters.'),
       '#description' => $this->t('Check this to remove all special characters.'),
       '#default_value' => $config->get('escape'),
       '#states' => $invisible_state,
     ];
-
-    $form['#attached']['library'][] = 'auto_entitylabel/auto_entitylabel.admin';
-
-    return parent::buildForm($form, $form_state);
   }
 
   /**

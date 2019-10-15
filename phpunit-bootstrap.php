@@ -21,3 +21,7 @@ namespace Drupal\Core\Validation\Plugin\Validation\Constraint {
 namespace Drupal\Core\Field {
   class FieldItemList {}
 }
+
+namespace Drupal\Core\Form {
+  class ConfigFormBase {}
+}
