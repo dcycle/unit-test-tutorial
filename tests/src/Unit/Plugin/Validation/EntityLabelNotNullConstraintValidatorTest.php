@@ -60,6 +60,29 @@ class EntityLabelNotNullConstraintValidatorTest extends TestCase {
   }
 
   /**
+   * Helper function to return a mock FieldItemList.
+   *
+   * @param bool $empty
+   *   Whether the mock object's isEmpty() method should return TRUE.
+   *
+   * @return
+   *   A mock FieldItemList.
+   */
+  public function mockFieldItemListObject(bool $empty) {
+    $object = $this->getMockBuilder(FieldItemList::class)
+      ->setMethods([
+        'isEmpty'
+      ])
+      ->disableOriginalConstructor()
+      ->getMock();
+
+    $object->method('isEmpty')
+      ->willReturn($empty);
+
+    return $object;
+  }
+
+  /**
    * Provider for testManageTypedData().
    */
   public function providerManageTypedData() {
@@ -69,27 +92,14 @@ class EntityLabelNotNullConstraintValidatorTest extends TestCase {
         'input' => new \stdClass(),
         'expected' => FALSE,
       ],
-    ];
-
-    $field_item_list = $this->getMockBuilder(FieldItemList::class)
-      ->setMethods([
-        'isEmpty'
-      ])
-      ->disableOriginalConstructor()
-      ->getMock();
-
-    $field_item_list->method('isEmpty')
-      ->willReturn(TRUE);
-
-    return $return;
-
-    $field_item_list->method('isEmpty')
-      ->willReturn(FALSE);
-
-    return $return + [
       [
-        'message' => 'Typed data is an non-empty FieldItemList',
-        'input' => $field_item_list,
+        'message' => 'Typed data is an empty FieldItemList',
+        'input' => $this->mockFieldItemListObject(TRUE),
+        'expected' => TRUE,
+      ],
+      [
+        'message' => 'Typed data is a non-empty FieldItemList',
+        'input' => $this->mockFieldItemListObject(FALSE),
         'expected' => FALSE,
       ],
     ];
