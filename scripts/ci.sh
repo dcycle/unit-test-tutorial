@@ -5,4 +5,4 @@
 set -e
 
 docker run --rm -v "$(pwd)":/app phpunit/phpunit \
-  --group myproject
+  --group unit_test_tutorial

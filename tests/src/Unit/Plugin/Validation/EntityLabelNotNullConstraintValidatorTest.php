@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\auto_entitylabel\Tests;
+namespace Drupal\Tests\auto_entitylabel\Unit\Plugin\Validation;
 
 use Drupal\auto_entitylabel\Plugin\Validation\EntityLabelNotNullConstraintValidator;
 use Drupal\Core\Field\FieldItemList;
@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test EntityLabelNotNullConstraintValidator.
  *
- * @group myproject
+ * @group unit_test_tutorial
  */
 class EntityLabelNotNullConstraintValidatorTest extends TestCase {
 
@@ -69,22 +69,27 @@ class EntityLabelNotNullConstraintValidatorTest extends TestCase {
         'input' => new \stdClass(),
         'expected' => FALSE,
       ],
-      [
-        'message' => 'Typed data is an empty FieldItemList',
-        'input' => new class() extends FieldItemList {
-          public function isEmpty() {
-            return TRUE;
-          }
-        },
-        'expected' => TRUE,
-      ],
+    ];
+
+    $field_item_list = $this->getMockBuilder(FieldItemList::class)
+      ->setMethods([
+        'isEmpty'
+      ])
+      ->disableOriginalConstructor()
+      ->getMock();
+
+    $field_item_list->method('isEmpty')
+      ->willReturn(TRUE);
+
+    return $return;
+
+    $field_item_list->method('isEmpty')
+      ->willReturn(FALSE);
+
+    return $return + [
       [
         'message' => 'Typed data is an non-empty FieldItemList',
-        'input' => new class() extends FieldItemList {
-          public function isEmpty() {
-            return FALSE;
-          }
-        },
+        'input' => $field_item_list,
         'expected' => FALSE,
       ],
     ];

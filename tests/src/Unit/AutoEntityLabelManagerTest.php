@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\auto_entitylabel\Tests;
+namespace Drupal\Tests\auto_entitylabel\Unit;
 
 use Drupal\auto_entitylabel\AutoEntityLabelManager;
 use PHPUnit\Framework\TestCase;
@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test AutoEntityLabelManager.
  *
- * @group myproject
+ * @group unit_test_tutorial
  */
 class AutoEntityLabelManagerTest extends TestCase {
 

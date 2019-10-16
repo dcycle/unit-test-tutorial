@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\auto_entitylabel\Tests;
+namespace Drupal\Tests\auto_entitylabel\Unit\Form;
 
 use Drupal\auto_entitylabel\Form\AutoEntityLabelForm;
 use PHPUnit\Framework\TestCase;
@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test AutoEntityLabelForm.
  *
- * @group myproject
+ * @group unit_test_tutorial
  */
 class AutoEntityLabelFormTest extends TestCase {
 
